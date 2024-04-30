@@ -32,7 +32,7 @@ In the `sagas.js` file:
 ```js
 import { apiSaga, initializeAPIStore } from "api-calls-store/src/package-index";
 
-initializeEthereumStore({
+initializeAPIStore({
   getAPI,
 });
 
