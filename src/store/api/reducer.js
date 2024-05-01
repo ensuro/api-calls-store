@@ -93,9 +93,12 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_ADD_SUBSCRIPTION:
-      state = modifyNode(state, ["subscriptions", action.key, "functions"], () => action.componentApiCalls);
-      state = modifyNode(state, ["subscriptions", action.key, "clockCount"], () => action.clockCount || defaultCount);
-      state = modifyNode(state, ["subscriptions", action.key, "nextClock"], () => state.count);
+      const dict = {
+        functions: action.componentApiCalls,
+        clockCount: action.clockCount || defaultCount,
+        nextClock: state.count,
+      };
+      state = modifyNode(state, ["subscriptions", action.key], () => dict);
       break;
 
     case API_REMOVE_SUBSCRIPTION:
