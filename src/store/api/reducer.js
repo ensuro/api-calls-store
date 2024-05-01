@@ -102,9 +102,8 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_REMOVE_SUBSCRIPTION:
-      let subs = { ...state.subscriptions };
-      delete subs[action.key];
-      state = { ...state, subscriptions: subs };
+      const { [action.key]: value, ...otherSubs } = state.subscriptions;
+      state = { ...state, subscriptions: otherSubs };
       break;
 
     case API_SUBSCRIPTION_INCREASE_CLOCK:
