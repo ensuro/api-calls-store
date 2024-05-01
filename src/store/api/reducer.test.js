@@ -24,7 +24,7 @@ describe("API Reducer tests", () => {
   });
 
   const state = {
-    count: 0,
+    currentClock: 0,
     calls: {},
     call_metadata: {},
     subscriptions: {},

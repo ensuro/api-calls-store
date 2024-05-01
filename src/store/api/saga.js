@@ -4,14 +4,14 @@ import { call, put, takeEvery, delay, select } from "redux-saga/effects";
 import { selectAPICallTimestampByKey } from "./selectors";
 
 // API Redux States
-import { API_CALL, API_CALL_SUCCESS, API_CALL_FAIL, API_DISPATCH_CLOCK, API_INCREASE_COUNT } from "./actionTypes";
+import { API_CALL, API_CALL_SUCCESS, API_CALL_FAIL, API_DISPATCH_CLOCK, API_INCREASE_CLOCK } from "./actionTypes";
 import { getAPIFn } from "../../package-index";
 import { get, patch, post } from "../../helpers/api_helper.js";
 
 async function apiCall(apiName, args, data, headers) {
-  let api = getAPIFn(apiName);
-  let url = api.urlFunction(...(args || []));
-  let formatter = api.formatter;
+  const api = getAPIFn(apiName);
+  const url = api.urlFunction(...(args || []));
+  const formatter = api.formatter;
   if (api.method === "GET") {
     const response = await get(url, { headers });
     return {
@@ -29,8 +29,8 @@ async function apiCall(apiName, args, data, headers) {
 }
 
 export function* makeAPICall({ retry, apiName, args, data, headers, forceCall, maxAge }) {
-  let api = getAPIFn(apiName);
-  let key = api.urlFunction(...(args || []));
+  const api = getAPIFn(apiName);
+  const key = api.urlFunction(...(args || []));
   if (forceCall === undefined) {
     forceCall = api.method !== "GET";
   }
@@ -83,19 +83,23 @@ export function* makeAPICall({ retry, apiName, args, data, headers, forceCall, m
 export function* refreshAllSubscriptionsCalls() {
   const state = yield select((state) => state.APIReducer);
   const subscriptions = state.subscriptions;
-  const count = state.count;
+  const currentClock = state.currentClock;
   const keyArray = new Set();
   const apiCalls = new Set();
   for (const subKey in subscriptions) {
     const next = subscriptions[subKey].nextClock;
-    if (next === count) {
+    if (next === currentClock) {
       const subscriptionArray = subscriptions[subKey].functions;
       for (const sub of subscriptionArray) {
-        let api = getAPIFn(sub.apiName);
-        let key = api.urlFunction(...(sub.args || []));
+        const api = getAPIFn(sub.apiName);
+        const key = api.urlFunction(...(sub.args || []));
         if (!keyArray.has(key)) apiCalls.add(sub);
         keyArray.add(key);
-        yield put({ type: "API_SET_NEXT_CLOCK", key: subKey, newClock: subscriptions[subKey].clockCount + next });
+        yield put({
+          type: "API_SUBSCRIPTION_SET_NEXT_CLOCK",
+          key: subKey,
+          newClock: subscriptions[subKey].clockCount + next,
+        });
       }
     }
   }
@@ -109,7 +113,7 @@ export function* refreshAllSubscriptionsCalls() {
     });
   }
 
-  yield put({ type: API_INCREASE_COUNT });
+  yield put({ type: API_INCREASE_CLOCK });
 }
 
 export function* apiSaga() {

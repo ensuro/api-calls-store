@@ -58,7 +58,7 @@ test("API_CALL with simple method", async () => {
   assert.deepStrictEqual(store.getState().APIReducer, {
     call_metadata: {},
     subscriptions: {},
-    count: 0,
+    currentClock: 0,
     calls: {
       [call_key]: {
         state: "LOADING",
@@ -107,7 +107,7 @@ test("API_CALL method with parameters", async () => {
   assert.deepStrictEqual(store.getState().APIReducer, {
     call_metadata: {},
     subscriptions: {},
-    count: 0,
+    currentClock: 0,
     calls: {
       [call_key]: {
         state: "LOADING",
@@ -147,7 +147,7 @@ test("API_CALL POST new user success", async () => {
   assert.deepStrictEqual(store.getState().APIReducer, {
     call_metadata: {},
     subscriptions: {},
-    count: 0,
+    currentClock: 0,
     calls: {
       [call_key]: {
         state: "LOADING",
@@ -176,7 +176,7 @@ test("API_CALL with retries", async () => {
   assert.deepStrictEqual(store.getState().APIReducer, {
     call_metadata: {},
     subscriptions: {},
-    count: 0,
+    currentClock: 0,
     calls: {
       [call_key]: {
         state: "LOADING",
@@ -188,7 +188,7 @@ test("API_CALL with retries", async () => {
   assert.deepStrictEqual(store.getState().APIReducer, {
     call_metadata: {},
     subscriptions: {},
-    count: 0,
+    currentClock: 0,
     calls: {
       [call_key]: {
         state: "LOADING",
@@ -242,7 +242,7 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with one ethCall", async () =>
     },
     call_metadata: {},
     calls: {},
-    count: 0,
+    currentClock: 0,
   });
 
   assert.strictEqual(selectors.selectAPICall(store.getState().APIReducer, "apy", [etkAddress]), undefined);
@@ -290,7 +290,7 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with two apiCall", async () =>
     },
     call_metadata: {},
     calls: {},
-    count: 0,
+    currentClock: 0,
   });
 
   assert.strictEqual(selectors.selectAPICall(store.getState().APIReducer, "apy", [etkAddress]), undefined);
@@ -334,7 +334,7 @@ test("ONE call and remove the subscription", async () => {
   });
 
   assert.deepStrictEqual(store.getState().APIReducer, {
-    count: 0,
+    currentClock: 0,
     call_metadata: {},
     calls: {},
     subscriptions: {

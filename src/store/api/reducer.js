@@ -4,13 +4,13 @@ import {
   API_CALL,
   API_CALL_FAIL,
   API_CALL_SUCCESS,
-  API_INCREASE_COUNT,
+  API_INCREASE_CLOCK,
   API_REMOVE_SUBSCRIPTION,
-  API_SET_NEXT_CLOCK,
+  API_SUBSCRIPTION_SET_NEXT_CLOCK,
 } from "./actionTypes";
 
 const INIT_STATE = {
-  count: 0,
+  currentClock: 0,
   calls: {},
   call_metadata: {}, // Different dictionary to avoid re-rendering if only timestamp changes
   /*
@@ -96,7 +96,7 @@ const APIReducer = (state = INIT_STATE, action) => {
       const dict = {
         functions: action.componentApiCalls,
         clockCount: action.clockCount || defaultCount,
-        nextClock: state.count,
+        nextClock: state.currentClock,
       };
       state = modifyNode(state, ["subscriptions", action.key], () => dict);
       break;
@@ -107,13 +107,13 @@ const APIReducer = (state = INIT_STATE, action) => {
       state = { ...state, subscriptions: subs };
       break;
 
-    case API_SET_NEXT_CLOCK:
+    case API_SUBSCRIPTION_SET_NEXT_CLOCK:
       state = modifyNode(state, ["subscriptions", action.key, "nextClock"], () => action.newClock);
       break;
 
-    case API_INCREASE_COUNT:
-      const newCount = state.count + 1;
-      state = { ...state, count: newCount };
+    case API_INCREASE_CLOCK:
+      const newCount = state.currentClock + 1;
+      state = { ...state, currentClock: newCount };
       break;
 
     default:
