@@ -93,6 +93,8 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_ADD_SUBSCRIPTION:
+      if (state.subscriptions.hasOwnProperty([action.key]))
+        throw new Error(`Subscription '${action.key}' already exists`);
       const dict = {
         functions: action.componentApiCalls,
         clockCount: action.clockCount || defaultCount,
