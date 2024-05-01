@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { api as apiConfig } from "../../config";
-import { call, put, takeEvery, delay, select } from "redux-saga/effects";
+import { call, put, takeEvery, delay, select, all } from "redux-saga/effects";
 import { selectAPICallTimestampByKey } from "./selectors";
 
 // API Redux States
@@ -103,15 +103,18 @@ export function* refreshAllSubscriptionsCalls() {
       });
     }
   }
-  for (const call of Array.from(apiCalls)) {
-    yield put({
-      type: "API_CALL",
-      apiName: call.apiName,
-      args: call.args,
-      headers: call.headers,
-      method: call.method || "GET",
-    });
-  }
+
+  yield all(
+    Array.from(apiCalls).map((call) =>
+      put({
+        type: "API_CALL",
+        apiName: call.apiName,
+        args: call.args,
+        headers: call.headers,
+        method: call.method || "GET",
+      })
+    )
+  );
 
   yield put({ type: API_INCREASE_CLOCK });
 }
