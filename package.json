@@ -4,12 +4,12 @@
   "description": "API Calls Store for React Redux",
   "scripts": {
     "prettier": "prettier --write .",
-    "test": "react-scripts test --env=./src/utils/testing/jest-environment-jsdom.js",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:lib": "babel src -d lib/src; cp package.json lib/package.json; cp README.md lib/README.md; cp LICENSE lib/LICENSE",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts test --coverage --watchAll --env=./src/utils/testing/jest-environment-jsdom.js"
+    "coverage": "react-scripts test --coverage --watchAll --env=./src/utils/testing/jest-environment-jsdom.js --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
   "dependencies": {
     "buffer": "^6.0.3",
