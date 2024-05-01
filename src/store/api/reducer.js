@@ -6,7 +6,7 @@ import {
   API_CALL_SUCCESS,
   API_INCREASE_CLOCK,
   API_REMOVE_SUBSCRIPTION,
-  API_SUBSCRIPTION_SET_NEXT_CLOCK,
+  API_SUBSCRIPTION_INCREASE_CLOCK,
 } from "./actionTypes";
 
 const INIT_STATE = {
@@ -107,7 +107,7 @@ const APIReducer = (state = INIT_STATE, action) => {
       state = { ...state, subscriptions: subs };
       break;
 
-    case API_SUBSCRIPTION_SET_NEXT_CLOCK:
+    case API_SUBSCRIPTION_INCREASE_CLOCK:
       state = modifyNode(state, ["subscriptions", action.key, "nextClock"], () => action.newClock);
       break;
 

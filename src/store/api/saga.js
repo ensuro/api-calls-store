@@ -95,12 +95,12 @@ export function* refreshAllSubscriptionsCalls() {
         const key = api.urlFunction(...(sub.args || []));
         if (!keyArray.has(key)) apiCalls.add(sub);
         keyArray.add(key);
-        yield put({
-          type: "API_SUBSCRIPTION_SET_NEXT_CLOCK",
-          key: subKey,
-          newClock: subscriptions[subKey].clockCount + next,
-        });
       }
+      yield put({
+        type: "API_SUBSCRIPTION_INCREASE_CLOCK",
+        key: subKey,
+        newClock: subscriptions[subKey].clockCount + next,
+      });
     }
   }
   for (const call of Array.from(apiCalls)) {
