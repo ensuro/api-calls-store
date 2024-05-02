@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { selectAPICallMultiple } from "../../store/api/selectors";
+import { addRemoveApiSub } from "../../utils/helpers/store_helper";
 import SubsManager from "./subsManager";
 
 const componentApiCalls = function () {
@@ -16,12 +17,8 @@ const Static = ({ activePolicies, subscriptions }) => {
   let dispatch = useDispatch();
   const [sub, setSub] = useState(false);
 
-  // Initial useEffects
   useEffect(() => {
-    dispatch({ type: "API_ADD_SUBSCRIPTION", key: "staticDashboard", componentApiCalls: componentApiCalls() });
-    return () => {
-      dispatch({ type: "API_REMOVE_SUBSCRIPTION", key: "staticDashboard" });
-    };
+    return addRemoveApiSub(dispatch, "staticDashboard", componentApiCalls());
   }, [dispatch]);
 
   return (

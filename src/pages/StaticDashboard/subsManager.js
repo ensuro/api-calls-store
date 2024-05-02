@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { selectAPICallMultiple } from "../../store/api/selectors";
+import { addRemoveApiSub } from "../../utils/helpers/store_helper";
 
 const componentApiCalls = function () {
   return [{ apiName: "gwp", args: ["0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6"] }];
@@ -10,12 +11,8 @@ const componentApiCalls = function () {
 const SubsManager = ({ gwp }) => {
   let dispatch = useDispatch();
 
-  // Initial useEffects
   useEffect(() => {
-    dispatch({ type: "API_ADD_SUBSCRIPTION", key: "subsManager", componentApiCalls: componentApiCalls() });
-    return () => {
-      dispatch({ type: "API_REMOVE_SUBSCRIPTION", key: "subsManager" });
-    };
+    return addRemoveApiSub(dispatch, "subsManager", componentApiCalls());
   }, [dispatch]);
 
   return (
