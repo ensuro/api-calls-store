@@ -20,5 +20,14 @@ export const API_REMOVE_SUBSCRIPTION = "API_REMOVE_SUBSCRIPTION";
  */
 
 export const API_DISPATCH_CLOCK = "API_DISPATCH_CLOCK";
+/*
+ * API_DISPATCH_CLOCK -> This clock will dispatch an action in the saga every Xms and that action will call the API.
+ */
 export const API_SUBSCRIPTION_INCREASE_CLOCK = "API_SUBSCRIPTION_INCREASE_CLOCK";
+/*
+ * API_SUBSCRIPTION_INCREASE_CLOCK -> This action sets when to call each subscription again
+ */
 export const API_INCREASE_CLOCK = "API_INCREASE_CLOCK";
+/*
+ * API_INCREASE_CLOCK -> Increase the general clock to check if the saga should call the API again
+ */

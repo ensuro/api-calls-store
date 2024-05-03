@@ -32,8 +32,10 @@ In the `sagas.js` file:
 ```js
 import { apiSaga, initializeAPIStore } from "api-calls-store/src/package-index";
 
+const clockCount = 15;
 initializeAPIStore({
   getAPI,
+  clockCount, // clockCount is the amount of times an API_CALL will be skipped - default is 10
 });
 
 export default function* rootSaga() {
@@ -42,6 +44,20 @@ export default function* rootSaga() {
     fork(apiSaga),
   ]);
 }
+```
+
+### Add the dispatch clock
+
+In the `App.js` add this `useEffect` to dispatch the clock every Xms.
+This clock will dispatch an action in the saga every Xms and that action will call the API.
+
+```js
+useEffect(() => {
+  const interval = setInterval(() => {
+    dispatch({ type: "API_DISPATCH_CLOCK" });
+  }, 1000);
+  return () => clearInterval(interval);
+}, [dispatch]);
 ```
 
 # Actions
@@ -69,6 +85,15 @@ export const API_REMOVE_SUBSCRIPTION = "API_REMOVE_SUBSCRIPTION";
  */
 
 export const API_DISPATCH_CLOCK = "API_DISPATCH_CLOCK";
+/*
+ * API_DISPATCH_CLOCK -> This clock will dispatch an action in the saga every Xms and that action will call the API.
+ */
 export const API_SUBSCRIPTION_INCREASE_CLOCK = "API_SUBSCRIPTION_INCREASE_CLOCK";
+/*
+ * API_SUBSCRIPTION_INCREASE_CLOCK -> This action sets when to call each subscription again
+ */
 export const API_INCREASE_CLOCK = "API_INCREASE_CLOCK";
+/*
+ * API_INCREASE_CLOCK -> Increase the general clock to check if the saga should call the API again
+ */
 ```
