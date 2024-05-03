@@ -1,4 +1,4 @@
-import { toDecimal } from "./helpers/api_calls";
+import { toDecimal } from "./utils/helpers/api_calls";
 import { registerAPI } from "./helpers/apiRegistry";
 
 const baseUrl = "https://offchain-sepolia.ensuro.co/api";

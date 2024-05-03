@@ -6,7 +6,7 @@ import { selectAPICallTimestampByKey } from "./selectors";
 // API Redux States
 import { API_CALL, API_CALL_SUCCESS, API_CALL_FAIL, API_DISPATCH_CLOCK, API_INCREASE_CLOCK } from "./actionTypes";
 import { getAPIFn } from "../../package-index";
-import { get, patch, post } from "../../helpers/api_helper.js";
+import { get, patch, post } from "../../utils/helpers/api_helper.js";
 
 async function apiCall(apiName, args, data, headers) {
   const api = getAPIFn(apiName);
