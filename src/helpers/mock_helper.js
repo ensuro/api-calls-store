@@ -1,4 +1,4 @@
-import * as api_calls from "./api_calls";
+import * as api_calls from "../utils/helpers/api_calls";
 
 export const setupRiskFieldGets = (axiosMock, address) => {
   const baseUrl = "https://test.ensuro.co/api";

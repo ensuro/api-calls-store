@@ -1,8 +1,8 @@
 import Big from "big.js";
 import assert from "assert";
 import store from "../index.js";
-import * as api_calls from "../../helpers/api_calls";
-import * as api_helper from "../../helpers/api_helper.js";
+import * as api_calls from "../../utils/helpers/api_calls";
+import * as api_helper from "../../utils/helpers/api_helper.js";
 import * as actionTypes from "./actionTypes";
 import * as mock_helper from "../../helpers/mock_helper";
 import * as selectors from "./selectors";

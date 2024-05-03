@@ -1,5 +1,5 @@
 import APIReducer from "./reducer.js";
-import { toDecimal } from "../../helpers/api_calls.js";
+import { toDecimal } from "../../utils/helpers/api_calls.js";
 import { initializeAPIStore } from "../../package-index";
 import * as apiRegistry from "../../helpers/apiRegistry";
 
