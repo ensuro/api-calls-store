@@ -5,6 +5,7 @@ export const toDecimal = (number) => {
   return Big(number);
 };
 
+/* Function just for testing, to build a hashcode from a string */
 export const getFieldSumByChar = (field) => {
   let sum = 0;
   for (let i = 0; i < field.length; i++) {

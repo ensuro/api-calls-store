@@ -89,11 +89,11 @@ export function* refreshAllSubscriptionsCalls() {
   for (const subKey in subscriptions) {
     const next = subscriptions[subKey].nextClock;
     if (next === currentClock) {
-      const subscriptionArray = subscriptions[subKey].functions;
-      for (const sub of subscriptionArray) {
-        const api = getAPIFn(sub.apiName);
-        const key = api.urlFunction(...(sub.args || []));
-        if (!keyArray.has(key)) apiCalls.add(sub);
+      const calls = subscriptions[subKey].functions;
+      for (const call of calls) {
+        const api = getAPIFn(call.apiName);
+        const key = api.urlFunction(...(call.args || []));
+        if (!keyArray.has(key)) apiCalls.add(call);
         keyArray.add(key);
       }
       yield put({

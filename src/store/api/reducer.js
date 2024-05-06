@@ -58,38 +58,18 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_CALL_SUCCESS:
-      state = {
-        ...state,
-        calls: {
-          ...state.calls,
-          [action.call_key]: {
-            state: "LOADED",
-            value: action.value,
-            code: action.code,
-          },
-        },
-        call_metadata: {
-          ...state.call_metadata,
-          [action.call_key]: {
-            ...(state.call_metadata[action.call_key] || {}),
-            timestamp: action.timestamp,
-          },
-        },
-      };
+      state = modifyNode(state, ["call_metadata", action.call_key], (x) => {
+        return { ...(x || {}), timestamp: action.timestamp };
+      });
+      state = modifyNode(state, ["calls", action.call_key], () => {
+        return { state: "LOADED", value: action.value, code: action.code };
+      });
       break;
 
     case API_CALL_FAIL:
-      state = {
-        ...state,
-        calls: {
-          ...state.calls,
-          [action.call_key]: {
-            ...state.calls[action.call_key],
-            state: "ERROR",
-            code: action.code,
-          },
-        },
-      };
+      state = modifyNode(state, ["calls", action.call_key], (x) => {
+        return { ...x, state: "ERROR", code: action.code };
+      });
       break;
 
     case API_ADD_SUBSCRIPTION:
@@ -109,7 +89,9 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_SUBSCRIPTION_INCREASE_CLOCK:
-      state = modifyNode(state, ["subscriptions", action.key, "nextClock"], () => action.newClock);
+      state = modifyNode(state, ["subscriptions", action.key], (sub) => {
+        return { ...sub, nextClock: sub.nextClock + sub.clockCount };
+      });
       break;
 
     case API_INCREASE_CLOCK:
