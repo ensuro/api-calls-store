@@ -1,68 +1,3 @@
-# API-Calls-store
-
-API Calls store for react redux
-
-# How to use
-
-## Install
-
-```bash
-npm install --save api-calls-store
-```
-
-## Configure
-
-### Add the reducer
-
-In the `reducers.js` file:
-
-```js
-import APIReducer from "api-calls-store/src/store/api/reducer";
-
-export default combineReducers({
-  // ...
-  APIReducer,
-});
-```
-
-### Add the saga
-
-In the `sagas.js` file:
-
-```js
-import { apiSaga, initializeAPIStore } from "api-calls-store/src/package-index";
-
-const clockCount = 15;
-initializeAPIStore({
-  getAPI,
-  clockCount, // clockCount is the amount of times an API_CALL will be skipped - default is 10
-});
-
-export default function* rootSaga() {
-  yield all([
-    // ...
-    fork(apiSaga),
-  ]);
-}
-```
-
-### Add the dispatch clock
-
-In the `App.js` add this `useEffect` to dispatch the clock every Xms.
-This clock will dispatch an action in the saga every Xms and that action will call the API.
-
-```js
-useEffect(() => {
-  const interval = setInterval(() => {
-    dispatch({ type: "API_DISPATCH_CLOCK" });
-  }, 1000);
-  return () => clearInterval(interval);
-}, [dispatch]);
-```
-
-# Actions
-
-```js
 /**
  * {type: API_CALL, apiName: "apy", args: [], method: method || "GET" }
  */
@@ -102,4 +37,3 @@ export const API_SUBSCRIPTION_INCREASE_CLOCK = "API_SUBSCRIPTION_INCREASE_CLOCK"
  * API_INCREASE_CLOCK -> Increase the general clock to check if the saga should call the API again
  */
 export const API_INCREASE_CLOCK = "API_INCREASE_CLOCK";
-```
