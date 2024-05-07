@@ -85,7 +85,7 @@ export function* refreshAllSubscriptionsCalls() {
   const subscriptions = state.subscriptions;
   const currentClock = state.currentClock;
   const keyArray = new Set();
-  const apiCalls = new Set();
+  const apiCalls = [];
   for (const subKey in subscriptions) {
     const next = subscriptions[subKey].nextClock;
     if (next === currentClock) {
@@ -93,7 +93,7 @@ export function* refreshAllSubscriptionsCalls() {
       for (const call of calls) {
         const api = getAPIFn(call.apiName);
         const key = api.urlFunction(...(call.args || []));
-        if (!keyArray.has(key)) apiCalls.add(call);
+        if (!keyArray.has(key)) apiCalls.push(call);
         keyArray.add(key);
       }
       yield put({ type: "API_SUBSCRIPTION_INCREASE_CLOCK", key: subKey });
@@ -101,7 +101,7 @@ export function* refreshAllSubscriptionsCalls() {
   }
 
   yield all(
-    Array.from(apiCalls).map((call) =>
+    apiCalls.map((call) =>
       put({
         type: "API_CALL",
         apiName: call.apiName,
