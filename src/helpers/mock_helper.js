@@ -1,7 +1,7 @@
 import * as api_calls from "../utils/helpers/api_calls";
 
 export const setupRiskFieldGets = (axiosMock, address) => {
-  const baseUrl = "https://test.ensuro.co/api";
+  const baseUrl = "https://testapi.com/api";
   axiosMock
     .onGet(`${baseUrl}/etokens/${address}/apr/?days_from=7`)
     .reply(200, { apy: api_calls.getFieldSumByChar("apy") });
@@ -33,6 +33,6 @@ export const setupRiskFieldGets = (axiosMock, address) => {
 };
 
 export const setupWalletMocks = (axiosMock, address) => {
-  const baseUrl = "https://test.ensuro.co/api";
+  const baseUrl = "https://testapi.com/api";
   axiosMock.onPost(`${baseUrl}/wallet/${address}/verify/`).reply(200, { token: "withPersonaReferenceID" });
 };

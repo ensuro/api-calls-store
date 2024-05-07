@@ -9,25 +9,25 @@ import { map } from "lodash";
 
 const DynamicDashboard = ({ state, subscriptions }) => {
   let dispatch = useDispatch();
-  const [rmAddress, setRmAddress] = useState("");
+  const [address, setAddress] = useState("");
   const [endpoint, setEndpoint] = useState("");
   const [result, setResult] = useState("");
   const [clicked, setClicked] = useState(false);
 
   const dispatchCall = () => {
-    if (rmAddress && endpoint) dispatch({ type: "API_CALL", apiName: endpoint, args: [rmAddress] });
+    if (address && endpoint) dispatch({ type: "API_CALL", apiName: endpoint, args: [address] });
     setClicked(true);
   };
 
   useEffect(() => {
-    if (rmAddress && endpoint && clicked) {
-      const res = selectAPICall(state, endpoint, [rmAddress]);
+    if (address && endpoint && clicked) {
+      const res = selectAPICall(state, endpoint, [address]);
       if (res) {
         setResult(res);
         setClicked(false);
       }
     }
-  }, [clicked, rmAddress, endpoint, state]);
+  }, [clicked, address, endpoint, state]);
 
   return (
     <React.Fragment>
@@ -36,13 +36,13 @@ const DynamicDashboard = ({ state, subscriptions }) => {
           <h1>API Endpoints - Sepolia</h1>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Risk Module Address</Form.Label>
+              <Form.Label>Wallet Address</Form.Label>
               <InputGroup>
                 <Form.Control
                   placeholder="0x00"
-                  id="rmAddress"
-                  value={rmAddress}
-                  onChange={(e) => setRmAddress(e.target.value || "")}
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value || "")}
                 />
               </InputGroup>
             </Form.Group>
@@ -52,18 +52,18 @@ const DynamicDashboard = ({ state, subscriptions }) => {
               <InputGroup>
                 <Form.Select onChange={(e) => setEndpoint(e.target.value || "")} aria-label="Select the API endpoint">
                   <option value="">Select the API endpoint</option>
-                  <option value="activePolicies">Active Policies</option>
-                  <option value="gwp">GWP</option>
+                  <option value="ethBalance">ETH Balance (Sepolia)</option>
+                  <option value="ethPrice">ETH Price</option>
                 </Form.Select>
               </InputGroup>
             </Form.Group>
           </Form>
           <br />
-          <Button onClick={dispatchCall} disabled={!rmAddress || !endpoint}>
+          <Button onClick={dispatchCall} disabled={!address || !endpoint}>
             Dispatch call
           </Button>
 
-          {rmAddress && endpoint && result && (
+          {address && endpoint && result && (
             <>
               <hr />
               <h1>RESULT</h1>

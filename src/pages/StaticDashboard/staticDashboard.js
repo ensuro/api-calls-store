@@ -10,10 +10,10 @@ import { addRemoveApiSub } from "../../utils/helpers/store_helper";
 import SubsManager from "./subsManager";
 
 const componentApiCalls = function () {
-  return [{ apiName: "activePolicies", args: ["0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6"] }];
+  return [{ apiName: "ethBalance", args: ["0x72E425D9cBec1709b290d9bbf7a5Ec9c27dfb7F1"] }];
 };
 
-const Static = ({ activePolicies, subscriptions }) => {
+const Static = ({ ethBalance, subscriptions }) => {
   let dispatch = useDispatch();
   const [sub, setSub] = useState(false);
 
@@ -25,15 +25,15 @@ const Static = ({ activePolicies, subscriptions }) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          <h1>Dashboard to see API Subscriptions on RM Getspot</h1>
-          <h3>RM Address: 0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6</h3>
+          <h1>Dashboard to see API Subscriptions</h1>
+          <h3>Wallet: 0x72E425D9cBec1709b290d9bbf7a5Ec9c27dfb7F1</h3>
 
           <hr />
-          <h3>Method: activePolicies</h3>
-          {activePolicies && activePolicies.value && (
+          <h3>Method: ethBalance</h3>
+          {ethBalance && ethBalance.value && (
             <>
               <h3>RESULT</h3>
-              <h3>{activePolicies.value.toString()}</h3>
+              <h3>{ethBalance.value.toString()}</h3>
             </>
           )}
 
@@ -75,9 +75,9 @@ const Static = ({ activePolicies, subscriptions }) => {
 };
 
 const mapStateToProps = (state) => {
-  const [activePolicies] = selectAPICallMultiple(state.APIReducer, componentApiCalls());
+  const [ethBalance] = selectAPICallMultiple(state.APIReducer, componentApiCalls());
   const subscriptions = state.APIReducer.subscriptions;
-  return { activePolicies, subscriptions };
+  return { ethBalance, subscriptions };
 };
 
 export default connect(mapStateToProps, null)(Static);

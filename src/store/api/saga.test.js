@@ -13,7 +13,7 @@ const MockAdapter = require("axios-mock-adapter");
 const sinon = require("sinon");
 
 let axiosMock;
-const baseUrl = "https://test.ensuro.co/api";
+const baseUrl = "https://testapi.com/api";
 
 beforeEach(() => {
   store.dispatch({ type: "RESET_ALL" });

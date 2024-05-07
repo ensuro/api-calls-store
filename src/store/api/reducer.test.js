@@ -4,7 +4,7 @@ import { initializeAPIStore } from "../../package-index";
 import * as apiRegistry from "../../helpers/apiRegistry";
 
 const rmAddress = "0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6"; // RM Getspot Sepolia address
-const baseUrl = "https://test.ensuro.co/api";
+const baseUrl = "https://testapi.com/api";
 apiRegistry.registerAPI(
   "activePolicies",
   (address) => `${baseUrl}/policies/?rm=${address}&status=active&limit=1`,
@@ -113,7 +113,7 @@ describe("API Reducer tests", () => {
   it("Should add one API_CALL", () => {
     const action = { type: "API_CALL", apiName: "gwp", args: [rmAddress] };
 
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const expectedState = {
       ...state,
       calls: { [call_key]: { state: "LOADING" } },
@@ -122,7 +122,7 @@ describe("API Reducer tests", () => {
   });
 
   it("Should add one API_CALL and there is already another one", () => {
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const initialState = {
       ...state,
       calls: { [call_key]: { state: "LOADING" } },
@@ -130,7 +130,7 @@ describe("API Reducer tests", () => {
 
     const action = { type: "API_CALL", apiName: "activePolicies", args: [rmAddress] };
     const call_key2 =
-      "https://test.ensuro.co/api/policies/?rm=0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6&status=active&limit=1";
+      "https://testapi.com/api/policies/?rm=0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6&status=active&limit=1";
     const expectedState = {
       ...state,
       calls: {
@@ -143,7 +143,7 @@ describe("API Reducer tests", () => {
 
   it("Should retry the API_CALL", () => {
     const action = { type: "API_CALL", apiName: "gwp", args: [rmAddress], retry: 5 };
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const expectedState = {
       ...state,
       calls: { [call_key]: { state: "LOADING", retries: 5 } },
@@ -152,7 +152,7 @@ describe("API Reducer tests", () => {
   });
 
   it("The API_CALL was successful", () => {
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const initialState = { ...state, calls: { [call_key]: { state: "LOADING" } } };
     const action = {
       type: "API_CALL_SUCCESS",
@@ -170,9 +170,9 @@ describe("API Reducer tests", () => {
   });
 
   it("The API_CALL was successful and there is already another one", () => {
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const call_key2 =
-      "https://test.ensuro.co/api/policies/?rm=0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6&status=active&limit=1";
+      "https://testapi.com/api/policies/?rm=0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6&status=active&limit=1";
     const initialState = {
       ...state,
       calls: {
@@ -198,7 +198,7 @@ describe("API Reducer tests", () => {
   });
 
   it("The API_CALL fails", () => {
-    const call_key = "https://test.ensuro.co/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
+    const call_key = "https://testapi.com/api/riskmodules/0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6/gwp/";
     const initialState = {
       ...state,
       calls: { [call_key]: { state: "LOADING", retries: 9 } },

@@ -5,10 +5,10 @@ import { selectAPICallMultiple } from "../../store/api/selectors";
 import { addRemoveApiSub } from "../../utils/helpers/store_helper";
 
 const componentApiCalls = function () {
-  return [{ apiName: "gwp", args: ["0x1c749F3057Bb3e8A6448199ce5F4B87E376f7aa6"] }];
+  return [{ apiName: "ethPrice", args: [] }];
 };
 
-const SubsManager = ({ gwp }) => {
+const SubsManager = ({ ethPrice }) => {
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,11 +17,11 @@ const SubsManager = ({ gwp }) => {
 
   return (
     <React.Fragment>
-      <h3>Method: gwp</h3>
-      {gwp && gwp.value && (
+      <h3>Method: ethPrice</h3>
+      {ethPrice && ethPrice.value && (
         <>
           <h3>RESULT</h3>
-          <h3>{gwp.value.toString()}</h3>
+          <h3>{ethPrice.value.toString()}</h3>
         </>
       )}
     </React.Fragment>
@@ -29,8 +29,8 @@ const SubsManager = ({ gwp }) => {
 };
 
 const mapStateToProps = (state) => {
-  const [gwp] = selectAPICallMultiple(state.APIReducer, componentApiCalls());
-  return { gwp };
+  const [ethPrice] = selectAPICallMultiple(state.APIReducer, componentApiCalls());
+  return { ethPrice };
 };
 
 export default connect(mapStateToProps, null)(SubsManager);
