@@ -1,6 +1,6 @@
 {
   "name": "api-calls-store",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "API Calls Store for React Redux",
   "scripts": {
     "prettier": "prettier --write .",
@@ -20,7 +20,7 @@
     "reactstrap": "^9.2.2",
     "redux": "^5.0.1",
     "redux-saga": "^1.3.0",
-    "reselect": "^5.1.0"
+    "reselect": "^4.1.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.5",
