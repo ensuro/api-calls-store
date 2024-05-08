@@ -168,7 +168,7 @@ test("API_CALL with retries", async () => {
   const rmAddress = "0x01";
   axiosMock.onGet(`${baseUrl}/riskmodules/${rmAddress}/active_premiums/`).reply(500);
 
-  initializeAPIStore({ getAPI: apiRegistry.getAPI });
+  initializeAPIStore({ getAPI: apiRegistry.getAPI, clockCount: 10 });
 
   await store.dispatch({ type: actionTypes.API_CALL, apiName: "activePremiums", args: [rmAddress] });
 
