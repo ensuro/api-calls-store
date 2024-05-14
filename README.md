@@ -7,7 +7,7 @@ API Calls store for react redux
 ## Install
 
 ```bash
-npm install --save api-calls-store
+npm install --save @ensuro/api-calls-store
 ```
 
 ## Configure
