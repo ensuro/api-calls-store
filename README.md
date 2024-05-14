@@ -17,7 +17,7 @@ npm install --save @ensuro/api-calls-store
 In the `reducers.js` file:
 
 ```js
-import APIReducer from "api-calls-store/src/store/api/reducer";
+import APIReducer from "@ensuro/api-calls-store/src/store/api/reducer";
 
 export default combineReducers({
   // ...
@@ -30,7 +30,7 @@ export default combineReducers({
 In the `sagas.js` file:
 
 ```js
-import { apiSaga, initializeAPIStore } from "api-calls-store/src/package-index";
+import { apiSaga, initializeAPIStore } from "@ensuro/api-calls-store/src/package-index";
 
 const clockCount = 15;
 initializeAPIStore({
