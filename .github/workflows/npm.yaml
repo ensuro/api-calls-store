@@ -35,8 +35,8 @@ jobs:
           cache: "npm"
 
       - run: npm ci
+      - run: npm version --no-git-tag-version $VERSION
       - run: npm run build:lib # create the ./lib directory with the files to publish
-      - run: sed "s/%%VERSION%%/$VERSION/" package.json > "./lib/package.json"
 
       - id: semver
         run: |
