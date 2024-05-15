@@ -1,6 +1,6 @@
 {
-  "name": "api-calls-store",
-  "version": "0.0.6",
+  "name": "@ensuro/api-calls-store",
+  "version": "%%VERSION%%",
   "description": "API Calls Store for React Redux",
   "scripts": {
     "prettier": "prettier --write .",
