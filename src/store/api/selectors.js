@@ -2,9 +2,11 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { getAPIFn } from "../../package-index";
 
+const EMPTYSTATE = {};
+
 const getCalls = (state) => state.calls;
 const getCallMetadata = (state) => state.call_metadata;
-const getCallKey = (__, apiName, args) => {
+export const getCallKey = (__, apiName, args) => {
   let api = getAPIFn(apiName);
   return api.urlFunction(...(args || []));
 };
@@ -37,6 +39,6 @@ export const selectAPICallState = createSelector(
 
 export const selectAPICallMultiple = createSelector([getCalls, getCallKeys], (calls, callKeys) =>
   _.map(callKeys, (callKey) => {
-    return calls[callKey] === undefined ? {} : { value: calls[callKey].value, state: calls[callKey].state };
+    return !calls || calls[callKey] === undefined ? EMPTYSTATE : calls[callKey];
   })
 );
