@@ -51,17 +51,24 @@ const APIReducer = (state = INIT_STATE, action) => {
     case API_CALL:
       let api = getAPIFn(action.apiName);
       let key = api.urlFunction(...(action.args || []));
-      let newCallState = state.calls[key] ? { ...state.calls[key] } : {};
-      if (newCallState.state !== "LOADED") newCallState.state = "LOADING";
-      if (action.retry !== undefined) newCallState.retries = action.retry;
-      state = { ...state, calls: { ...state.calls, [key]: newCallState } };
+      state = modifyNode(state, ["calls", key], (call) => {
+        if (call !== undefined && call.state === "LOADED" && call.retries === undefined) {
+          return call;
+        }
+        call = call || {};
+        call.state = call.state !== "LOADED" ? "LOADING" : call.state;
+        if (action.retry !== undefined) call.retries = action.retry;
+        return call;
+      });
       break;
 
     case API_CALL_SUCCESS:
       state = modifyNode(state, ["call_metadata", action.call_key], (x) => {
         return { ...(x || {}), timestamp: action.timestamp };
       });
-      state = modifyNode(state, ["calls", action.call_key], () => {
+      state = modifyNode(state, ["calls", action.call_key], (call) => {
+        if (call !== undefined && call.state === "LOADED" && call.retries === undefined && call.value === action.value)
+          return call;
         return { state: "LOADED", value: action.value, code: action.code };
       });
       break;
