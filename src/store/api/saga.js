@@ -50,6 +50,7 @@ export function* makeAPICall({ retry, apiName, args, data, headers, forceCall, m
     yield put({
       type: code < 400 ? API_CALL_SUCCESS : API_CALL_FAIL,
       call_key: key,
+      apiName: apiName,
       value: response,
       code: code,
       timestamp: new Date().getTime(),
@@ -72,6 +73,7 @@ export function* makeAPICall({ retry, apiName, args, data, headers, forceCall, m
         type: API_CALL_FAIL,
         payload: error.message,
         call_key: key,
+        apiName: apiName,
         value: error.response?.data,
         code: error.response?.status,
         error: true,
