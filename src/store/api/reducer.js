@@ -47,11 +47,12 @@ function modifyNode(state, path, newValueFn) {
 }
 
 const APIReducer = (state = INIT_STATE, action) => {
+  let newState = state;
   switch (action.type) {
     case API_CALL:
       let api = getAPIFn(action.apiName);
       let key = api.urlFunction(...(action.args || []));
-      state = modifyNode(state, ["calls", key], (call) => {
+      newState = modifyNode(state, ["calls", key], (call) => {
         if (call !== undefined && call.state === "LOADED" && call.retries === undefined) {
           return call;
         }
@@ -63,10 +64,10 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_CALL_SUCCESS:
-      state = modifyNode(state, ["call_metadata", action.call_key], (x) => {
+      newState = modifyNode(state, ["call_metadata", action.call_key], (x) => {
         return { ...(x || {}), timestamp: action.timestamp };
       });
-      state = modifyNode(state, ["calls", action.call_key], (call) => {
+      newState = modifyNode(newState, ["calls", action.call_key], (call) => {
         if (call !== undefined && call.state === "LOADED" && call.retries === undefined && call.value === action.value)
           return call;
         return { state: "LOADED", value: action.value, code: action.code };
@@ -74,7 +75,7 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     case API_CALL_FAIL:
-      state = modifyNode(state, ["calls", action.call_key], (x) => {
+      newState = modifyNode(state, ["calls", action.call_key], (x) => {
         return { ...x, state: "ERROR", code: action.code };
       });
       break;
@@ -87,30 +88,29 @@ const APIReducer = (state = INIT_STATE, action) => {
         clockCount: action.clockCount || defaultCount,
         nextClock: state.currentClock,
       };
-      state = modifyNode(state, ["subscriptions", action.key], () => dict);
+      newState = modifyNode(state, ["subscriptions", action.key], () => dict);
       break;
 
     case API_REMOVE_SUBSCRIPTION:
       const { [action.key]: value, ...otherSubs } = state.subscriptions;
-      state = { ...state, subscriptions: otherSubs };
+      newState = { ...state, subscriptions: otherSubs };
       break;
 
     case API_SUBSCRIPTION_INCREASE_CLOCK:
-      state = modifyNode(state, ["subscriptions", action.key], (sub) => {
+      newState = modifyNode(state, ["subscriptions", action.key], (sub) => {
         return { ...sub, nextClock: sub.nextClock + sub.clockCount };
       });
       break;
 
     case API_INCREASE_CLOCK:
       const newCount = state.currentClock + 1;
-      state = { ...state, currentClock: newCount };
+      newState = { ...state, currentClock: newCount };
       break;
 
     default:
-      state = { ...state };
-      break;
+      return state;
   }
-  return state;
+  return newState;
 };
 
 export default APIReducer;
