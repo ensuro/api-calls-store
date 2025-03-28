@@ -108,7 +108,7 @@ const APIReducer = (state = INIT_STATE, action) => {
       break;
 
     default:
-      return state;
+      break;
   }
   return newState;
 };
