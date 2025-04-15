@@ -70,13 +70,13 @@ const APIReducer = (state = INIT_STATE, action) => {
       newState = modifyNode(newState, ["calls", action.call_key], (call) => {
         if (call !== undefined && call.state === "LOADED" && call.retries === undefined && call.value === action.value)
           return call;
-        return { state: "LOADED", value: action.value, code: action.code };
+        return { state: "LOADED", value: action.value, code: action.code, error_detail: null };
       });
       break;
 
     case API_CALL_FAIL:
       newState = modifyNode(state, ["calls", action.call_key], (x) => {
-        return { ...x, state: "ERROR", value: action.value, code: action.code };
+        return { ...x, state: "ERROR", error_detail: action.value, code: action.code };
       });
       break;
 

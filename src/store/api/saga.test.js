@@ -71,6 +71,7 @@ test("API_CALL with simple method", async () => {
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
   assert.ok(
@@ -120,6 +121,7 @@ test("API_CALL method with parameters", async () => {
       state: "LOADED",
       value: `ret${rkAddress}activePremiums`,
       code: 200,
+      error_detail: null,
     },
   });
 
@@ -160,6 +162,7 @@ test("API_CALL POST new user success", async () => {
       state: "LOADED",
       value: "withPersonaReferenceID",
       code: 200,
+      error_detail: null,
     },
   });
 });
@@ -254,6 +257,7 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with one ethCall", async () =>
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
   assert.ok(
@@ -306,11 +310,13 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with two apiCall", async () =>
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
     [active_premiums_call_key]: {
       state: "LOADED",
       value: `ret${rkAddress}activePremiums`,
       code: 200,
+      error_detail: null,
     },
   });
 
@@ -356,6 +362,7 @@ test("ONE call and remove the subscription", async () => {
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
   assert.ok(
