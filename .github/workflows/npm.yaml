@@ -45,19 +45,23 @@ jobs:
 
       - run: npm ci
       - run: npm version --no-git-tag-version "${{ steps.semver.outputs.semver }}"
-      - run: npm run build:lib # create the ./lib directory with the files to publish
+      - run: npm run build
 
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ./lib/.npmrc
+      - name: Preview tarball
+        run: npm pack --dry-run
 
-      - run: |
+      - run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTOMATION_TOKEN}" > .npmrc
+        env:
+          NPM_AUTOMATION_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+
+      - name: Publish
+        run: |
           RELEASE_TAG="${{ github.event.inputs.tag }}"
           if [ -z "$RELEASE_TAG" ]; then
-            if grep -q -- '-beta' <<< "${{ steps.semver.outputs.semver }}"; then
+            if echo "${{ steps.semver.outputs.semver }}" | grep -q -- '-beta'; then
               RELEASE_TAG=beta
             else
-              # No manual input, we must be running on a tag
               RELEASE_TAG=latest
             fi
           fi
           npm publish --tag "$RELEASE_TAG" --access public
-        working-directory: ./lib
