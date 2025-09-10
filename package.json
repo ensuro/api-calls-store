@@ -11,6 +11,14 @@
     "eject": "react-scripts eject",
     "coverage": "react-scripts test --coverage --watchAll --env=./src/utils/testing/jest-environment-jsdom.js --transformIgnorePatterns \"node_modules/(?!axios)/\""
   },
+  "files": [
+    "lib/dist",
+    "src/utils/helpers",
+    "src/store/api",
+    "src/package-index.js",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
     "buffer": "^6.0.3",
     "lodash": "^4.17.21",
