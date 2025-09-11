@@ -16,6 +16,7 @@
     "src/utils/helpers",
     "src/store/api",
     "src/package-index.js",
+    "src/config.js",
     "LICENSE",
     "README.md"
   ],
