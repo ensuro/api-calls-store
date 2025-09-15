@@ -19,7 +19,7 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.{test,spec}.js"],
     exclude: ["react-playground/**", "lib/**", "dist/**", "node_modules/**"],
-    coverage: { reporter: ["text", "lcov"] },
+    coverage: { provider: "v8", reporter: ["text", "lcov"] },
     globals: true,
     setupFiles: ["src/setupTests.js"],
   },
