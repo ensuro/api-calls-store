@@ -93,6 +93,7 @@ test("API_CALL with simple method", async () => {
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
 
@@ -132,7 +133,6 @@ test("API_CALL method with parameters", async () => {
   });
 
   await new Promise((r) => setTimeout(r, 0));
-
   expect(store.getState().APIReducer.calls).toEqual({
     [call_key]: { state: "LOADED", value: `ret${rkAddress}activePremiums`, code: 200 },
   });
@@ -165,7 +165,6 @@ test("API_CALL POST new user success", async () => {
   });
 
   await new Promise((r) => setTimeout(r, 1000));
-
   expect(store.getState().APIReducer.calls).toEqual({
     [call_key]: { state: "LOADED", value: "withPersonaReferenceID", code: 200 },
   });
@@ -255,6 +254,7 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with one ethCall", async () =>
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
 
@@ -353,6 +353,7 @@ test("ONE call and remove the subscription", async () => {
       state: "LOADED",
       value: Big(api_calls.getFieldSumByChar("apy")),
       code: 200,
+      error_detail: null,
     },
   });
 

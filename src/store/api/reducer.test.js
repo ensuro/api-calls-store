@@ -158,12 +158,13 @@ describe("API Reducer tests", () => {
       type: "API_CALL_SUCCESS",
       call_key: call_key,
       value: 912,
+      code: 200,
       timestamp: 1703683845252,
     };
 
     const expectedState = {
       ...state,
-      calls: { [call_key]: { state: "LOADED", value: 912 } },
+      calls: { [call_key]: { state: "LOADED", value: 912, code: 200, error_detail: null } },
       call_metadata: { [call_key]: { timestamp: 1703683845252 } },
     };
     expect(APIReducer(initialState, action)).toEqual(expectedState);
@@ -182,12 +183,12 @@ describe("API Reducer tests", () => {
       call_metadata: { [call_key]: { timestamp: 1703683845252 } },
     };
 
-    const action = { type: "API_CALL_SUCCESS", call_key: call_key2, value: 10, timestamp: 1703683849000 };
+    const action = { type: "API_CALL_SUCCESS", call_key: call_key2, value: 10, timestamp: 1703683849000, code: 200 };
     const expectedState = {
       ...state,
       calls: {
         [call_key]: { state: "LOADED", value: 912 },
-        [call_key2]: { state: "LOADED", value: 10 },
+        [call_key2]: { state: "LOADED", value: 10, code: 200, error_detail: null },
       },
       call_metadata: {
         [call_key]: { timestamp: 1703683845252 },
