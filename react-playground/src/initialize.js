@@ -1,7 +1,8 @@
-import { BNToDecimal } from "./utils/helpers/api_calls";
-import { registerAPI } from "./helpers/apiRegistry";
+import { initializeAPIStore, registerAPI, getAPI, BNToDecimal } from "api-calls-store";
 
 const baseUrl = "https://api-sepolia.etherscan.io/api";
+
+initializeAPIStore({ getAPI, clockCount: 15 });
 
 /** Risk Module Endpoints **/
 registerAPI(

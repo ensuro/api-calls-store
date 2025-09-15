@@ -1,15 +1,18 @@
-export { apiSaga } from "./store/api/saga";
+export { apiSaga } from "./store/api/saga.js";
+export { selectAPICall, selectAPICallMultiple } from "./store/api/selectors.js";
+export { addRemoveApiSub } from "./utils/helpers/store_helper.js";
+export { default as config } from "./config.js";
+export { default as APIReducer } from "./store/api/reducer.js";
+export { registerAPI, getAPI } from "./helpers/apiRegistry.js";
+export { BNToDecimal } from "./utils/helpers/api_calls.js";
+export let getAPIFn;
+export let defaultCount = 10;
 
-// Helpers
-let getAPIFn;
-let defaultCount;
-
-export function initializeAPIStore(options) {
+export function initializeAPIStore(options = {}) {
   const { getAPI, clockCount } = options;
-
-  if (!getAPI) throw new Error("The getAPI function is required to use the package");
+  if (typeof getAPI !== "function") {
+    throw new Error("The getAPI function is required to use the package");
+  }
   getAPIFn = getAPI;
-  defaultCount = clockCount || 10;
+  if (typeof clockCount === "number") defaultCount = clockCount;
 }
-
-export { getAPIFn, defaultCount };
