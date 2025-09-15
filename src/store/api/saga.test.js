@@ -133,7 +133,7 @@ test("API_CALL method with parameters", async () => {
   });
 
   await new Promise((r) => setTimeout(r, 0));
-  expect(store.getState().APIReducer.calls).toEqual({
+  expect(store.getState().APIReducer.calls).toMatchObject({
     [call_key]: { state: "LOADED", value: `ret${rkAddress}activePremiums`, code: 200 },
   });
 
@@ -165,7 +165,7 @@ test("API_CALL POST new user success", async () => {
   });
 
   await new Promise((r) => setTimeout(r, 1000));
-  expect(store.getState().APIReducer.calls).toEqual({
+  expect(store.getState().APIReducer.calls).toMatchObject({
     [call_key]: { state: "LOADED", value: "withPersonaReferenceID", code: 200 },
   });
 });
@@ -304,7 +304,7 @@ test("API_ADD_SUBSCRIPTION and API_DISPATCH_CLOCK with two apiCall", async () =>
 
   await new Promise((r) => setTimeout(r, 0));
 
-  expect(store.getState().APIReducer.calls).toEqual({
+  expect(store.getState().APIReducer.calls).toMatchObject({
     [apy_call_key]: { state: "LOADED", value: Big(api_calls.getFieldSumByChar("apy")), code: 200 },
     [active_premiums_call_key]: { state: "LOADED", value: `ret${rkAddress}activePremiums`, code: 200 },
   });

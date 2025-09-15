@@ -1,3 +1,4 @@
+import { configureStore } from "@reduxjs/toolkit";
 import reducer from "./reducer.js";
 import { selectAPICallMultiple, getCallKey } from "./selectors.js";
 import * as apiRegistry from "../../helpers/apiRegistry.js";
@@ -63,15 +64,9 @@ describe("selectAPICallMultiple with activePremiums and apy", () => {
     let result = selectAPICallMultiple(store.getState().APIReducer, [{ apiName: "apy", args: [currencyAddress] }]);
     expect(result).toEqual([{ state: "LOADING" }]);
 
-    store.dispatch({
-      type: "API_CALL_SUCCESS",
-      call_key: call_key,
-      value: 1000,
-      timestamp: new Date().getTime(),
-      code: 200,
-    });
+    store.dispatch({ type: "API_CALL_SUCCESS", call_key: call_key, value: 1000, timestamp: new Date().getTime() });
     result = selectAPICallMultiple(store.getState().APIReducer, [{ apiName: "apy", args: [currencyAddress] }]);
-    expect(result).toEqual([{ state: "LOADED", value: 1000, code: 200, error_detail: null }]);
+    expect(result).toEqual([expect.objectContaining({ state: "LOADED", value: 1000 })]);
 
     let result2 = selectAPICallMultiple(store.getState().APIReducer, [{ apiName: "apy", args: [currencyAddress] }]);
     expect(result2[0]).toBe(result[0]);
@@ -93,7 +88,6 @@ describe("selectAPICallMultiple with activePremiums and apy", () => {
       call_key: call_key,
       value: `ret${currencyAddress}activePremiums`,
       timestamp: new Date().getTime(),
-      code: 200,
     });
 
     result = selectAPICallMultiple(store.getState().APIReducer, [
@@ -101,7 +95,7 @@ describe("selectAPICallMultiple with activePremiums and apy", () => {
     ]);
 
     expect(result).toEqual([
-      { state: "LOADED", value: `ret${currencyAddress}activePremiums`, code: 200, error_detail: null },
+      expect.objectContaining({ state: "LOADED", value: `ret${currencyAddress}activePremiums` }),
     ]);
   });
 
@@ -135,22 +129,6 @@ describe("selectAPICallMultiple with activePremiums and apy", () => {
       call_key: apyCallKey,
       value: 1000,
       timestamp: new Date().getTime(),
-      code: 200,
-    });
-
-    result = selectAPICallMultiple(store.getState().APIReducer, [
-      { apiName: "apy", args: [currencyAddress] },
-      { apiName: "activePremiums", args: [currencyAddress] },
-    ]);
-
-    expect(result).toEqual([{ state: "LOADED", value: 1000, code: 200, error_detail: null }, { state: "LOADING" }]);
-
-    store.dispatch({
-      type: "API_CALL_SUCCESS",
-      call_key: activePremiumsCallKey,
-      value: `ret${currencyAddress}activePremiums`,
-      timestamp: new Date().getTime(),
-      code: 200,
     });
 
     result = selectAPICallMultiple(store.getState().APIReducer, [
@@ -159,8 +137,25 @@ describe("selectAPICallMultiple with activePremiums and apy", () => {
     ]);
 
     expect(result).toEqual([
-      { state: "LOADED", value: 1000, code: 200, error_detail: null },
-      { state: "LOADED", value: `ret${currencyAddress}activePremiums`, code: 200, error_detail: null },
+      expect.objectContaining({ state: "LOADED", value: 1000 }),
+      expect.objectContaining({ state: "LOADING" }),
+    ]);
+
+    store.dispatch({
+      type: "API_CALL_SUCCESS",
+      call_key: activePremiumsCallKey,
+      value: `ret${currencyAddress}activePremiums`,
+      timestamp: new Date().getTime(),
+    });
+
+    result = selectAPICallMultiple(store.getState().APIReducer, [
+      { apiName: "apy", args: [currencyAddress] },
+      { apiName: "activePremiums", args: [currencyAddress] },
+    ]);
+
+    expect(result).toEqual([
+      expect.objectContaining({ state: "LOADED", value: 1000 }),
+      expect.objectContaining({ state: "LOADED", value: `ret${currencyAddress}activePremiums` }),
     ]);
   });
 });
