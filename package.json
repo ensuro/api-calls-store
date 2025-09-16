@@ -1,6 +1,6 @@
 {
-  "name": "api-calls-store",
-  "version": "0.0.0",
+  "name": "@ensuro/api-calls-store",
+  "version": "%%VERSION%%",
   "type": "module",
   "exports": {
     ".": {
