@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       entry: "src/package-index.js",
       formats: ["es"],
-      fileName: () => "index",
+      fileName: () => "index.js",
     },
     outDir: "dist",
     sourcemap: true,
