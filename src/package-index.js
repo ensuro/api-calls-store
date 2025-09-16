@@ -5,6 +5,16 @@ export { default as config } from "./config.js";
 export { default as APIReducer } from "./store/api/reducer.js";
 export { registerAPI, getAPI } from "./helpers/apiRegistry.js";
 export { BNToDecimal } from "./utils/helpers/api_calls.js";
+export {
+  API_CALL,
+  API_CALL_SUCCESS,
+  API_CALL_FAIL,
+  API_ADD_SUBSCRIPTION,
+  API_REMOVE_SUBSCRIPTION,
+  API_DISPATCH_CLOCK,
+  API_SUBSCRIPTION_INCREASE_CLOCK,
+  API_INCREASE_CLOCK,
+} from "./store/api/actionTypes.js";
 export let getAPIFn;
 export let defaultCount = 10;
 
