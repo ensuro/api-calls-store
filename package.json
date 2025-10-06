@@ -1,6 +1,7 @@
 {
   "name": "@ensuro/api-calls-store",
   "version": "%%VERSION%%",
+  "description": "API Calls Store for React Redux",
   "type": "module",
   "exports": {
     ".": {

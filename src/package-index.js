@@ -24,5 +24,5 @@ export function initializeAPIStore(options = {}) {
     throw new Error("The getAPI function is required to use the package");
   }
   getAPIFn = getAPI;
-  if (typeof clockCount === "number") defaultCount = clockCount;
+  if (clockCount !== undefined) defaultCount = clockCount;
 }

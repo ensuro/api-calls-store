@@ -1,12 +1,37 @@
-# React + Vite
+# api-calls-store — React Playground (Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory is a **playground** to develop, test, and document usage examples of `api-calls-store` with React + Vite. It enables fast iteration with HMR, validation of real flows, and sharing reproducible demos.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Hot Module Replacement (HMR) with Vite.
+- Happy‑path and error‑case examples.
+- Direct integration with the `api-calls-store` source during development (no publishing required).
 
-## Expanding the ESLint configuration
+## Requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node ≥ 18
+- npm
+
+## Scripts
+
+- `dev`: `vite`
+- `build`: `vite build`
+- `lint`: `eslint .`
+- `preview`: `vite preview`
+
+## Local development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open the browser at the URL shown by Vite (defaults to http://localhost:5173).
+
+## License
+
+This playground inherits the main repository’s license.
