@@ -12,8 +12,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: false,
-      serializableCheck: false,
-      immutableCheck: false,
+      serializableCheck: true,
+      immutableCheck: true,
     }).concat(sagaMiddleware),
 
   devTools: import.meta.env.MODE !== "production",
