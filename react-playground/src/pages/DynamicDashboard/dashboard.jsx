@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 import { Form, InputGroup, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { selectAPICall } from "../../store/api/selectors";
+import { selectAPICall } from "api-calls-store";
 import { map } from "lodash";
 
 const DynamicDashboard = ({ state, subscriptions }) => {

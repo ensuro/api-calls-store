@@ -5,9 +5,8 @@ import { Container } from "reactstrap";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { selectAPICallMultiple } from "../../store/api/selectors";
-import { addRemoveApiSub } from "../../utils/helpers/store_helper";
-import SubsManager from "./subsManager";
+import { selectAPICallMultiple, addRemoveApiSub } from "api-calls-store";
+import SubsManager from "./subsManager.jsx";
 
 const componentApiCalls = function () {
   return [{ apiName: "ethBalance", args: ["0x72E425D9cBec1709b290d9bbf7a5Ec9c27dfb7F1"] }];

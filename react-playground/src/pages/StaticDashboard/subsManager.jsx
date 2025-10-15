@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-import { selectAPICallMultiple } from "../../store/api/selectors";
-import { addRemoveApiSub } from "../../utils/helpers/store_helper";
+import { selectAPICallMultiple, addRemoveApiSub } from "api-calls-store";
 
 const componentApiCalls = function () {
   return [{ apiName: "ethPrice", args: [] }];

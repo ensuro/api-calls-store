@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { api as apiConfig } from "../../config";
+import config from "../../config.js";
+const apiConfig = config.api;
 import { call, put, takeEvery, delay, select, all } from "redux-saga/effects";
 import { selectAPICallTimestampByKey } from "./selectors";
 

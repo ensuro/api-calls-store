@@ -19,6 +19,10 @@ on:
           - latest
           - beta
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   npm-upload:
     name: NPM Package Build and Upload
@@ -27,11 +31,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - id: semver
@@ -46,13 +50,6 @@ jobs:
       - run: npm ci
       - run: npm version --no-git-tag-version "${{ steps.semver.outputs.semver }}"
       - run: npm run build
-
-      - name: Preview tarball
-        run: npm pack --dry-run
-
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTOMATION_TOKEN}" > .npmrc
-        env:
-          NPM_AUTOMATION_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
 
       - name: Publish
         run: |
