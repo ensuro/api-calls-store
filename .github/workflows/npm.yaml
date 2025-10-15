@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"
+          registry-url: 'https://registry.npmjs.org'
 
       - id: semver
         run: |
@@ -47,6 +47,9 @@ jobs:
           fi
           echo "::set-output name=semver::${SEMVER}"
 
+      # Ensure npm 11.5.1 or later is installed
+      - name: Update npm
+        run: npm install -g npm@latest
       - run: npm ci
       - run: npm version --no-git-tag-version "${{ steps.semver.outputs.semver }}"
       - run: npm run build
