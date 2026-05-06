@@ -20,7 +20,7 @@ on:
           - beta
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write # Required for OIDC
   contents: read
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - id: semver
         run: |
@@ -49,7 +49,10 @@ jobs:
 
       # Ensure npm 11.5.1 or later is installed
       - name: Update npm
-        run: npm install -g npm@latest
+        run: |
+          npm --version
+          npm install -g npm@10.9.8
+          npm install -g npm@latest
       - run: npm ci
       - run: npm version --no-git-tag-version "${{ steps.semver.outputs.semver }}"
       - run: npm run build
