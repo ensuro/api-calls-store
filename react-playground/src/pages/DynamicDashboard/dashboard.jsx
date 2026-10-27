@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import { Container } from "reactstrap";
 import { Form, InputGroup, Button } from "react-bootstrap";
@@ -11,7 +11,6 @@ const DynamicDashboard = ({ state, subscriptions }) => {
   let dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [endpoint, setEndpoint] = useState("");
-  const [result, setResult] = useState("");
   const [clicked, setClicked] = useState(false);
 
   const dispatchCall = () => {
@@ -19,15 +18,7 @@ const DynamicDashboard = ({ state, subscriptions }) => {
     setClicked(true);
   };
 
-  useEffect(() => {
-    if (address && endpoint && clicked) {
-      const res = selectAPICall(state, endpoint, [address]);
-      if (res) {
-        setResult(res);
-        setClicked(false);
-      }
-    }
-  }, [clicked, address, endpoint, state]);
+  const result = address && endpoint && clicked ? selectAPICall(state, endpoint, [address]) : undefined;
 
   return (
     <React.Fragment>

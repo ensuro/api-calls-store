@@ -2,7 +2,7 @@ exclude: "^docs/conf.py"
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: check-added-large-files
@@ -17,25 +17,37 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=auto"] # replace 'auto' with 'lf' to enforce Linux/Mac line endings or 'crlf' for Windows
 
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.2
+  - repo: local
     hooks:
       - id: prettier
-
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.35.0
-    hooks:
+        name: prettier
+        entry: npx --no-install prettier --write --list-different --ignore-unknown
+        language: system
+        types: [text]
       - id: eslint
-        files: \.[jt]sx?$ # *.js, *.jsx, *.ts, *.tsx
-        additional_dependencies:
-          - eslint@9.35.0
-          - "@eslint/js@9.35.0"
-          - globals@15.12.0
-          - eslint-plugin-react-hooks@5.1.0
-          - eslint-plugin-react-refresh@0.4.7
+        name: eslint (flat config)
+        entry: npx --no-install eslint
+        language: system
+        types_or: [javascript, jsx, ts, tsx]
+        args: ["--max-warnings=0"]
+
+  - repo: https://github.com/google/osv-scanner/
+    rev: v2.5.0
+    hooks:
+      - id: osv-scanner
+        always_run: false
+        files: '^package-lock\.json$'
+        args:
+          - scan
+          - source
+          - --format=vertical
+          - --recursive
+          - --verbosity=error
+          - --no-resolve
+          - .
 
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.12.0
+    rev: v8.28.0
     hooks:
       - id: gitleaks-docker
 # TODO: add solhint
