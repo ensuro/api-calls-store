@@ -2,6 +2,10 @@
 
 API Calls store for react redux
 
+## Requirements
+
+- Node.js >= 24.22.1 (the LTS security release), as declared in `.nvmrc`, enforced via the `engines` field and `engine-strict`, and used by CI.
+
 # How to use
 
 ## Install
