@@ -49,9 +49,9 @@ function modifyNode(state, path, newValueFn) {
 const APIReducer = (state = INIT_STATE, action) => {
   let newState = state;
   switch (action.type) {
-    case API_CALL:
-      let api = getAPIFn(action.apiName);
-      let key = api.urlFunction(...(action.args || []));
+    case API_CALL: {
+      const api = getAPIFn(action.apiName);
+      const key = api.urlFunction(...(action.args || []));
       newState = modifyNode(state, ["calls", key], (call) => {
         if (call !== undefined && call.state === "LOADED" && call.retries === undefined) {
           return call;
@@ -62,6 +62,7 @@ const APIReducer = (state = INIT_STATE, action) => {
         return call;
       });
       break;
+    }
 
     case API_CALL_SUCCESS:
       newState = modifyNode(state, ["call_metadata", action.call_key], (x) => {
@@ -80,8 +81,8 @@ const APIReducer = (state = INIT_STATE, action) => {
       });
       break;
 
-    case API_ADD_SUBSCRIPTION:
-      if (state.subscriptions.hasOwnProperty([action.key]))
+    case API_ADD_SUBSCRIPTION: {
+      if (Object.prototype.hasOwnProperty.call(state.subscriptions, action.key))
         throw new Error(`Subscription '${action.key}' already exists`);
       const dict = {
         functions: action.componentApiCalls,
@@ -90,11 +91,14 @@ const APIReducer = (state = INIT_STATE, action) => {
       };
       newState = modifyNode(state, ["subscriptions", action.key], () => dict);
       break;
+    }
 
-    case API_REMOVE_SUBSCRIPTION:
-      const { [action.key]: value, ...otherSubs } = state.subscriptions;
+    case API_REMOVE_SUBSCRIPTION: {
+      const otherSubs = { ...state.subscriptions };
+      delete otherSubs[action.key];
       newState = { ...state, subscriptions: otherSubs };
       break;
+    }
 
     case API_SUBSCRIPTION_INCREASE_CLOCK:
       newState = modifyNode(state, ["subscriptions", action.key], (sub) => {
@@ -102,10 +106,11 @@ const APIReducer = (state = INIT_STATE, action) => {
       });
       break;
 
-    case API_INCREASE_CLOCK:
+    case API_INCREASE_CLOCK: {
       const newCount = state.currentClock + 1;
       newState = { ...state, currentClock: newCount };
       break;
+    }
 
     default:
       break;
